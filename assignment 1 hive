@@ -76,3 +76,21 @@ ORDERNUMBER int,
     2005    1791486.7086791992
      
     *****Find a product for which maximum orders were placed
+select productline , max(quantityordered) from sales_order_csv group by productline;
+
+**out put is 
+Classic Cars    97
+Motorcycles     66
+Planes  85
+Ships   55
+Trains  51
+Trucks and Buses        70
+Vintage Cars    76
+
+****if required particular maxmimum of product 
+select productline , max(quantityordered) from sales_order_csv group by productline;
+
+***output is
+Classic Cars    97
+
+
