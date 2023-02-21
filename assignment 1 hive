@@ -1,0 +1,78 @@
+1. Download vechile sales data -> https://github.com/shashank-mishra219/Hive-Class/blob/main/sales_order_data.csv
+
+** hadoop command for creating directory in hdfs
+ hadoop fs -mkdir /sales
+**** moving files from hadoop local to hdfs directory
+hadoop fs -put 'sales_order_data.csv' /sales
+** now raw data available in hdfs location
+**creating table in hive 
+create table sales_order_csv(
+    > ORDERNUMBER int,
+    > QUANTITYORDERED int,
+    > PRICEEACH float,
+    > ORDERLINENUMBER int,
+    > SALES float,
+    > STATUS string,
+    > QTR_ID int,
+    > MONTH_ID int,
+    > YEAR_ID int,
+    > PRODUCTLINE string,
+    > MSRP int,
+    > PRODUCTCODE string,
+    > PHONE string,
+    > CITY string,
+    > STATE string,
+    > POSTALCODE string,
+    > COUNTRY string,
+    > TERRITORY string,
+    > CONTACTLASTNAME string,
+    > CONTACTFIRSTNAME string,
+    > DEALSIZE string
+    > )
+    > row format delimited
+    > fields terminated by ','
+    > tblproperties("skip.header.line.count"="1")
+    > ; 
+
+**** table got created now 
+*** now we loading data into table
+load data inpath '/sales/sales_order_data.csv' into table sales_order_csv;'
+*** creating orc table
+create table sales_order_orc(
+ORDERNUMBER int,
+    > QUANTITYORDERED int,
+    > PRICEEACH float,
+    > ORDERLINENUMBER int,
+    > SALES float,
+    > STATUS string,
+    > QTR_ID int,
+    > MONTH_ID int,
+    > YEAR_ID int,
+    > PRODUCTLINE string,
+    > MSRP int,
+    > PRODUCTCODE string,
+    > PHONE string,
+    > CITY string,
+    > STATE string,
+    > POSTALCODE string,
+    > COUNTRY string,
+    > TERRITORY string,
+    > CONTACTLASTNAME string,
+    > CONTACTFIRSTNAME string,
+    > DEALSIZE string
+    > )
+    stored as orc;
+    
+    ** loading data into orc table
+    insert overwrite table sales_order_orc select * from sales_order_csv;
+    
+    ***** Calculatye total sales per year
+     select year_id, sum(sales) as total_sales from sales_order_orc group by year_id;
+     
+     output is 
+    year_id    total_sales
+    2003    3516979.547241211
+    2004    4724162.593383789
+    2005    1791486.7086791992
+     
+    *****Find a product for which maximum orders were placed
