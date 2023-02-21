@@ -118,5 +118,6 @@ select country , min(sales) from sales_order_csv group by country order by count
 Australia       652.35
 
 ***  Calculate quarterly sales for each city 
+select year_id as year , month_id as month, sum(sales) as sales from sales_order_csv group by year_id , month_id ;
 
 
