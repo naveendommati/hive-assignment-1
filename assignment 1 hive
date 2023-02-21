@@ -39,7 +39,7 @@ create table sales_order_csv(
 load data inpath '/sales/sales_order_data.csv' into table sales_order_csv;'
 *** creating orc table
 create table sales_order_orc(
-ORDERNUMBER int,
+     ORDERNUMBER int,
     > QUANTITYORDERED int,
     > PRICEEACH float,
     > ORDERLINENUMBER int,
@@ -93,4 +93,20 @@ select productline , max(quantityordered) from sales_order_csv group by productl
 ***output is
 Classic Cars    97
 
+***** Calculate the total sales for each quarter
+select sum(sales)as total_sales ,QTR_ID from sales_order_csv group by QTR_ID ;
+***output**
+total_sales     qtr_id
+4701635.45300293        1
+4096240.605834961       2
+3517821.617919922       3
+7749560.021850586       4
+
+**** In which quarter sales was minimum
+select sum(sales)as total_sales ,QTR_ID from sales_order_csv group by QTR_ID order by QTR_ID limit 1 ;\
+***output**
+total_sales     qtr_id
+4701635.45300293        1
+
+ 
 
