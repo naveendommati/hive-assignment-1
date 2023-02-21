@@ -108,5 +108,15 @@ select sum(sales)as total_sales ,QTR_ID from sales_order_csv group by QTR_ID ord
 total_sales     qtr_id
 4701635.45300293        1
 
- 
+**** In which country sales was maximum and in which country sales was minimum
+select country , max(sales) from sales_order_csv group by country order by country desc limit 1;
+****out put is
+USA     14082.8
+
+select country , min(sales) from sales_order_csv group by country order by country asc limit 1;
+****output is 
+Australia       652.35
+
+***  Calculate quarterly sales for each city 
+
 
